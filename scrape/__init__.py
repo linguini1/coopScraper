@@ -73,7 +73,7 @@ class Driver:
         main_tab = self.driver.current_window_handle  # So driver can return
         bar = PixelBar("Scraping Jobs", max=len(job_links))
 
-        with open(CSV_OUTPUT, 'w', encoding="UTF8") as file:
+        with open(CSV_OUTPUT, 'w', encoding="UTF8", newline="") as file:
 
             writer = csv.writer(file)
             writer.writerow(Job.csv_headers())  # Headers

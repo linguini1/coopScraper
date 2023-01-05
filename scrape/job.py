@@ -117,9 +117,9 @@ class JobFactory:
         page_fields = [f.get_text(strip=True).lower() for f in page_fields]
         page_fields = " ".join(page_fields)
 
-        for field in self.fields:
-            if field.lower() not in page_fields:
-                self.fields.remove(field)
+        for _ in range(len(FIELD_TITLES)):
+            if not (FIELD_TITLES[_] in page_fields):
+                self.fields.remove(FIELD_TITLES[_])
 
     def __get_tables(self) -> tuple[Tag, Tag, Tag]:
         """
