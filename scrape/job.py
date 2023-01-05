@@ -80,9 +80,13 @@ class Job:
         """Returns a list of formatted property names belonging to the Job class"""
 
         headers: list[str] = []
-        for header in cls.__dict__.keys():
-            header = " ".join(header.split("_"))  # No underscores
-            headers.append(header.capitalize())
+        for header in cls.__annotations__.keys():
+
+            if header == "wfh":
+                headers.append(header.upper())
+            else:
+                header = " ".join(header.split("_"))  # No underscores
+                headers.append(header.capitalize())
 
         return headers
 
@@ -163,7 +167,6 @@ class JobFactory:
 
         index = self.fields.index(FIELD_TITLES[6])
         parsed_salary = self.job_inf[index].get_text(strip=True).replace("$", "")
-        print(parsed_salary)
 
         # Convert to floating point numbers
         salary = []
@@ -300,7 +303,7 @@ def main():
         factory = JobFactory(file.read())
         job = factory.make_job()
         print(job)
-        print(job.to_csv_row())
+        print(Job.csv_headers())
 
 
 if __name__ == '__main__':
