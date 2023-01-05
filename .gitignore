@@ -1,0 +1,11 @@
+# JetBrains artifact
+.idea/
+
+# Credential information
+config.json
+
+# Unit test
+test.txt
+
+# Output
+shortlist.csv
