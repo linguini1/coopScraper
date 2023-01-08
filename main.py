@@ -3,7 +3,7 @@ __author__ = "Matteo Golin"
 
 # Imports
 import chromedriver_autoinstaller
-from scrape import Driver
+from scrape import Driver, check_for_credentials
 
 # Constants
 URL = "https://mysuccess.carleton.ca/Shibboleth.sso/Login?entityID=http://cufed.carleton.ca/adfs/services/trust&target=https://mysuccess.carleton.ca/secure/sso.htm"
@@ -11,6 +11,9 @@ URL = "https://mysuccess.carleton.ca/Shibboleth.sso/Login?entityID=http://cufed.
 
 # Main
 def main():
+
+    # Check for credentials
+    check_for_credentials()
 
     # Ensure up-to-date driver
     chromedriver_autoinstaller.install()

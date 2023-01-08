@@ -2,7 +2,7 @@
 .idea/
 
 # Credential information
-config.json
+credentials.json
 
 # Unit test
 test.txt

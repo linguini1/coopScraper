@@ -5,6 +5,7 @@ __author__ = "Matteo Golin"
 import json
 import time
 import csv
+import os
 from progress.bar import PixelBar
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
@@ -12,29 +13,53 @@ from selenium.webdriver.common.by import By
 from .job import Job, JobFactory
 
 # Constants
-CREDS_FILE = "./config.json"
+CREDS_FILE = "./credentials.json"
 JOB_POSTINGS = "https://mysuccess.carleton.ca/myAccount/co-op/coopjobs.htm"
 CSV_OUTPUT = "./shortlist.csv"
+CREDENTIAL_STRUCTURE = {
+    "credentials": {
+        "username": "",
+        "password": ""
+    }
+}
+
+
+def load_credentials() -> tuple[str, str]:
+    """Creates basic authentication header for request."""
+
+    with open(CREDS_FILE, 'r') as file:
+        credentials = json.load(file)["credentials"]
+        username: str = "CUNET\\" + credentials["username"]
+        password: str = credentials["password"]
+
+    return username, password
+
+
+def check_for_credentials() -> None:
+
+    """Checks if the credentials file exists, and if not, creates one."""
+
+    if not os.path.exists(CREDS_FILE):
+
+        with open(CREDS_FILE, 'w') as file:
+            json.dump(
+                CREDENTIAL_STRUCTURE,
+                file
+            )
+
+        raise FileNotFoundError(
+            "You didn't create a credentials file! Don't worry, we made one for you, but be sure to fill it out."
+        )
+    elif "" in load_credentials():
+        raise ValueError("Your credentials are empty! Fill them out.")
 
 
 class Driver:
 
     def __init__(self):
-        self.username, self.password = self.load_credentials()
+        self.username, self.password = load_credentials()
         self.driver = Chrome()
         self.driver.implicitly_wait(4)
-
-    @staticmethod
-    def load_credentials() -> tuple[str, str]:
-
-        """Creates basic authentication header for request."""
-
-        with open(CREDS_FILE, 'r') as file:
-            credentials = json.load(file)["credentials"]
-            username: str = "CUNET\\" + credentials["username"]
-            password: str = credentials["password"]
-
-        return username, password
 
     def login(self, url) -> None:
 

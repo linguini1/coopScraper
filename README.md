@@ -1,12 +1,15 @@
 # CO-OP Scraper
 ### Matteo Golin
 
-Scrapes the co-op job board provided by Carleton for jobs on my shortlist, then saves the jobs to a CSV
-file so that I can manipulate them with Excel.
+This software use the Chrome Web Driver to log into a Carleton Student's MySuccess page and scrape all the job postings
+in their shortlist into a CSV file for further analysis by the student.
 
-## Requirements
+## Installation Requirements
 - Python 3.11+
 - bs4
 - progress
 - selenium
 - chromedriver_autoinstaller
+
+Run the program to get a credentials file created for you. Then, fill it out with your MyCarletonOne username and
+password.
